@@ -1,5 +1,6 @@
 package com.example.bme590.calculatorapp;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,20 +8,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 import android.widget.CompoundButton;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+import static com.example.bme590.calculatorapp.R.id.layout;
+
+public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener{
 
     boolean audio = false;
+    ToggleButton t;
+    RelativeLayout r;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        t= (ToggleButton) findViewById(R.id.toggleButton2);
+        r = (RelativeLayout) findViewById(R.id.layout);
+        t.setOnCheckedChangeListener(this);
+
 
     }
 
@@ -78,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             } */
-            
+
             if (arrayList.size() > 0) {
 
                 arrayList.remove((arrayList.size() - 1));
@@ -210,5 +221,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if(isChecked)
+        {
+            r.setBackgroundColor(Color.rgb(86,160,211));
+
+        }
+        else
+        {
+            r.setBackgroundColor(Color.rgb(0,0,156));
+
+        }
+
+    }
 };
 
