@@ -6,16 +6,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
+import android.widget.CompoundButton;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    boolean audio = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
     }
 
     @Override
@@ -26,11 +32,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void changestate (View v)
+    {
+        ToggleButton toggleButton = (ToggleButton)findViewById(R.id.toggleButton);
+        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
+                    //System.out.println("Toggle On");
+                    audio = true; //audio is on
+                } else {
+                    // The toggle is disabled
+                    //System.out.println("Toggle Off");
+                    audio = false;
+                }
+            }
+        });
+
+    }
+
+
     ArrayList<String> arrayList = new ArrayList<String>();
     String string = "";
     String string1 = "";
 
-    public void onClick1 (View v){
+    public void onClick1(View v) {
 
         TextView textView_commands = (TextView) findViewById(R.id.textView_commands);
 
@@ -38,48 +64,59 @@ public class MainActivity extends AppCompatActivity {
 
         string = (String) button.getText().toString();
 
-        if(!string.contains("+") && !string.contains("-") && !string.contains("/") && !string.contains("*")) {
-            string1 = string1+string;
+        if (!string.contains("+") && !string.contains("-") && !string.contains("/") && !string.contains("*")) {
+            string1 = string1 + string;
 
-            if (arrayList.size()>0) {
+          /*  if (audio = true)
+            {
+                if (string.equals("+"))
+                {
+                    play plus sound
+                }
+                else if (string.equals("-"))
+                {
 
-                arrayList.remove((arrayList.size()-1));
+                }
+            } */
+            
+            if (arrayList.size() > 0) {
+
+                arrayList.remove((arrayList.size() - 1));
             }
             arrayList.add(string1);
 
-        }
-        else {
+        } else {
 
             arrayList.add(string);
             arrayList.add(string);
-            string1="";
+            string1 = "";
         }
 
 
-        textView_commands.setText(textView_commands.getText().toString()+string);
+        textView_commands.setText(textView_commands.getText().toString() + string);
 //        textView_commands.setText(arrayList.toString());
 
 
     }
 
-    public void onClick (View v) {
+    public void onClick(View v) {
 
-        TextView textView_results = (TextView)findViewById(R.id.textView_results);
+        TextView textView_results = (TextView) findViewById(R.id.textView_results);
 
         int calc_result = 0;
         int calc_size = arrayList.size();
 
-        while (calc_size!=1){
-            if (calc_size>3){
+        while (calc_size != 1) {
+            if (calc_size > 3) {
 
-                if (arrayList.get(3).contains("*") || arrayList.get(3).contains("/")){
+                if (arrayList.get(3).contains("*") || arrayList.get(3).contains("/")) {
 
-                    if (arrayList.get(3).contains("*")){
-                        calc_result = Integer.parseInt(arrayList.get(2))* Integer.parseInt(arrayList.get(4));
+                    if (arrayList.get(3).contains("*")) {
+                        calc_result = Integer.parseInt(arrayList.get(2)) * Integer.parseInt(arrayList.get(4));
                     }
 
-                    if (arrayList.get(3).contains("/")){
-                        calc_result = Integer.parseInt(arrayList.get(2))/ Integer.parseInt(arrayList.get(4));
+                    if (arrayList.get(3).contains("/")) {
+                        calc_result = Integer.parseInt(arrayList.get(2)) / Integer.parseInt(arrayList.get(4));
                     }
 
                     arrayList.remove(2);
@@ -87,24 +124,22 @@ public class MainActivity extends AppCompatActivity {
                     arrayList.remove(2);
                     arrayList.add(2, Integer.toString(calc_result));
                     calc_size = arrayList.size();
-                }
+                } else {
 
-                else{
-
-                    if (arrayList.get(1).contains("+")){
-                        calc_result = Integer.parseInt(arrayList.get(0))+ Integer.parseInt(arrayList.get(2));
+                    if (arrayList.get(1).contains("+")) {
+                        calc_result = Integer.parseInt(arrayList.get(0)) + Integer.parseInt(arrayList.get(2));
                     }
 
-                    if (arrayList.get(1).contains("-")){
-                        calc_result = Integer.parseInt(arrayList.get(0))- Integer.parseInt(arrayList.get(2));
+                    if (arrayList.get(1).contains("-")) {
+                        calc_result = Integer.parseInt(arrayList.get(0)) - Integer.parseInt(arrayList.get(2));
                     }
 
-                    if (arrayList.get(1).contains("*")){
-                        calc_result = Integer.parseInt(arrayList.get(0))* Integer.parseInt(arrayList.get(2));
+                    if (arrayList.get(1).contains("*")) {
+                        calc_result = Integer.parseInt(arrayList.get(0)) * Integer.parseInt(arrayList.get(2));
                     }
 
-                    if (arrayList.get(1).contains("/")){
-                        calc_result = Integer.parseInt(arrayList.get(0))/ Integer.parseInt(arrayList.get(2));
+                    if (arrayList.get(1).contains("/")) {
+                        calc_result = Integer.parseInt(arrayList.get(0)) / Integer.parseInt(arrayList.get(2));
                     }
 
                     arrayList.remove(0);
@@ -115,23 +150,21 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
-            }
-
-            else{
-                if (arrayList.get(1).contains("+")){
-                    calc_result = Integer.parseInt(arrayList.get(0))+ Integer.parseInt(arrayList.get(2));
+            } else {
+                if (arrayList.get(1).contains("+")) {
+                    calc_result = Integer.parseInt(arrayList.get(0)) + Integer.parseInt(arrayList.get(2));
                 }
 
-                if (arrayList.get(1).contains("-")){
-                    calc_result = Integer.parseInt(arrayList.get(0))- Integer.parseInt(arrayList.get(2));
+                if (arrayList.get(1).contains("-")) {
+                    calc_result = Integer.parseInt(arrayList.get(0)) - Integer.parseInt(arrayList.get(2));
                 }
 
-                if (arrayList.get(1).contains("*")){
-                    calc_result = Integer.parseInt(arrayList.get(0))* Integer.parseInt(arrayList.get(2));
+                if (arrayList.get(1).contains("*")) {
+                    calc_result = Integer.parseInt(arrayList.get(0)) * Integer.parseInt(arrayList.get(2));
                 }
 
-                if (arrayList.get(1).contains("/")){
-                    calc_result = Integer.parseInt(arrayList.get(0))/ Integer.parseInt(arrayList.get(2));
+                if (arrayList.get(1).contains("/")) {
+                    calc_result = Integer.parseInt(arrayList.get(0)) / Integer.parseInt(arrayList.get(2));
                 }
 
                 arrayList.remove(0);
@@ -147,19 +180,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void clear (View v){
-        TextView textView_results = (TextView)findViewById(R.id.textView_results);
-        TextView textView_commands = (TextView)findViewById(R.id.textView_commands);
+    public void clear(View v) {
+        TextView textView_results = (TextView) findViewById(R.id.textView_results);
+        TextView textView_commands = (TextView) findViewById(R.id.textView_commands);
 
-        string1="";
-        string="";
+        string1 = "";
+        string = "";
         textView_results.setText("0");
         textView_commands.setText("");
         arrayList.clear();
 
 
     }
-
 
 
     @Override
@@ -176,4 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-}
+
+
+};
+
